@@ -4,6 +4,15 @@ const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
 
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('modal');
+  // Ensure modal exists and is hidden by default
+  if (modal) {
+    modal.classList.add('hidden');
+  }
+  // If modal is not found, do nothing (prevents test error)
+});
+
 
 
 
@@ -22,4 +31,5 @@ function mimicServerCall(url="http://mimicServer.example.com", config={}) {
       }
     }, 300);
   });
+}
 }
