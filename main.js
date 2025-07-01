@@ -5,12 +5,37 @@ const FULL_HEART = '♥'
 // Your JavaScript code goes here!
 
 document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('modal');
-  // Ensure modal exists and is hidden by default
-  if (modal) {
-    modal.classList.add('hidden');
-  }
-  // If modal is not found, do nothing (prevents test error)
+  // Like functionality
+  const hearts = document.querySelectorAll('.like-glyph');
+  hearts.forEach(heart => {
+    heart.addEventListener('click', () => {
+      if (heart.textContent === FULL_HEART) {
+        // If already liked, unlike
+        heart.textContent = EMPTY_HEART;
+        heart.classList.remove('activated-heart');
+      } else {
+        // Try to like (simulate server)
+        mimicServerCall()
+          .then(() => {
+            heart.textContent = FULL_HEART;
+            heart.classList.add('activated-heart');
+          })
+          .catch((error) => {
+            const modal = document.getElementById('modal');
+            if (modal) {
+              modal.classList.remove('hidden');
+              const modalMsg = document.getElementById('modal-message');
+              if (modalMsg) {
+                modalMsg.textContent = error;
+              }
+              setTimeout(() => {
+                modal.classList.add('hidden');
+              }, 3000);
+            }
+          });
+      }
+    });
+  });
 });
 
 
@@ -32,4 +57,8 @@ function mimicServerCall(url="http://mimicServer.example.com", config={}) {
     }, 300);
   });
 }
+        resolve("Pretend remote server notified of action!");
+      }
+    }, 300);
+  });
 }
